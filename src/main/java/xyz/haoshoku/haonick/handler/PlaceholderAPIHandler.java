@@ -36,7 +36,17 @@ public class PlaceholderAPIHandler extends PlaceholderExpansion {
     public String onPlaceholderRequest( Player player, @NotNull String params ) {
         if ( player == null || !player.isOnline() )
             return "";
-
+        if (params.toLowerCase().startsWith("haonick_targetname_")) {
+            String targetPlayerName = params.substring("haonick_targetname_".length());
+        
+            Player targetPlayer = Bukkit.getPlayerExact(targetPlayerName);
+        
+            if (targetPlayer != null && targetPlayer.isOnline()) {
+                return NickAPI.getName(targetPlayer);
+                } else {
+                return "";
+            }
+        }
         String fakeRank = HaoUserHandler.getUser( player ).getFakeRank();
         String rank = HaoUserHandler.getUser( player ).getRank();
         switch ( params.toLowerCase() ) {
